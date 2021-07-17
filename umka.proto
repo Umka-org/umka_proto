@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+message Student {
+  int32 id = 1;
+  string name = 2;
+}
+
+message Question {
+  int32 id = 1;
+  string text = 2;
+}
+
+message Answer {
+  int32 id = 1;
+  Student student = 2;
+  Question question = 3;
+  string text = 4;
+}
+
+message Evaluation {
+  int32 id = 1;
+  int32 answerId = 2;
+  int32 mark = 3;
+}
+
+message AnsweredQuestion {
+  Question question = 1;
+  string answer = 2;
+}
+
+message Exam {
+  int32 id = 1;
+  repeated Question questions = 2;
+}
+
+
+message InterviewMessage {
+  string name = 1;
+  string body = 2;
+}
+
+service Umka {
+  rpc getQuestion(Student) returns(Question) {}
+
+  rpc sendAnswer(Answer) returns(Evaluation) {}
+
+  rpc getTutorial(Student) returns (stream AnsweredQuestion) {}
+
+  rpc getExam(Student) returns (Exam) {}
+
+  rpc takeExam(stream Answer) returns(Evaluation) {}
+
+  rpc techInterview(stream InterviewMessage) returns(stream InterviewMessage) {}
+}
+
+
+
+
+
+
